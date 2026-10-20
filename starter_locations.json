@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Taj Mahal, Agra",
+    "description": "Explore an Indian heritage site and consider how pollution affects monuments.",
+    "polluter": {
+      "name": "MarbleCorp",
+      "type": "Corporation",
+      "hp": 50
+    },
+    "fact": "Learning theme: protecting heritage from air pollution."
+  },
+  {
+    "name": "River Ganga",
+    "description": "Explore a river setting and consider the effects of waste entering water.",
+    "polluter": {
+      "name": "Water Syndicate",
+      "type": "Group",
+      "hp": 45
+    },
+    "fact": "Learning theme: reducing water pollution and preventing waste discharge."
+  },
+  {
+    "name": "Delhi, India",
+    "description": "Explore a city setting and consider sources of air pollution.",
+    "polluter": {
+      "name": "Air Quality Fallout",
+      "type": "Event",
+      "hp": 70
+    },
+    "fact": "Learning theme: cleaner transport and reducing harmful emissions."
+  },
+  {
+    "name": "Gangotri Glacier, Himalayas",
+    "description": "Explore a Himalayan glacier setting and consider climate change.",
+    "polluter": {
+      "name": "Global Warming",
+      "type": "Global Phenomenon",
+      "hp": 60
+    },
+    "fact": "Learning theme: how a warming climate can affect glaciers and water resources."
+  }
+]
