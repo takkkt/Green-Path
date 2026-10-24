@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Taj Mahal, Agra",
+    "photo_note": "Illustrative contrast: the Taj Mahal under haze and in a clearer view. Different dates; not a documented restoration.",
+    "before_photo": "photos/taj_before.png",
+    "before_credit": "Buiobuione · CC BY-SA 4.0 · Wikimedia Commons",
+    "after_photo": "photos/taj_after.png",
+    "after_credit": "Rounik Ghosh · CC BY-SA 4.0 · Wikimedia Commons"
+  },
+  {
+    "name": "River Ganga",
+    "photo_note": "Illustrative contrast: waste on the Ganga bank and an upstream view near Rishikesh. Different places and dates; not a measured cleanup.",
+    "before_photo": "photos/ganga_before.png",
+    "before_credit": "Lane · CC BY 2.0 · Wikimedia Commons",
+    "after_photo": "photos/ganga_after.png",
+    "after_credit": "Prashant.882 · CC0 · Wikimedia Commons"
+  },
+  {
+    "name": "Delhi, India",
+    "photo_note": "Illustrative contrast: Delhi smog and an India Gate view with blue sky. Different places and dates; not a measured change in air quality.",
+    "before_photo": "photos/delhi_before.png",
+    "before_credit": "wili hybrid · CC BY 2.0 · Wikimedia Commons",
+    "after_photo": "photos/delhi_after.png",
+    "after_credit": "Kreativeart · CC BY-SA 4.0 · Wikimedia Commons"
+  },
+  {
+    "name": "Gangotri Glacier, Himalayas",
+    "photo_note": "Glacier melt and Mount Shivling near Gangotri: a conservation goal, not before/after recovery. Natural rock and debris are not litter.",
+    "before_photo": "photos/glacier_before.png",
+    "before_credit": "Gauravkaintura1234 · CC BY-SA 4.0 · Wikimedia Commons",
+    "after_photo": "photos/glacier_after.png",
+    "after_credit": "Arpit Rawat · CC0 · Wikimedia Commons"
+  }
+]

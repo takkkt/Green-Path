@@ -8,6 +8,7 @@ import re
 import secrets
 import sqlite3
 import time
+from photos import validate_photos
 
 START_HP = 300
 POINTS_PER_WIN = 10
@@ -60,7 +61,7 @@ def validate_location(item):
 class Game:
     """Owns the database connection and the current in-memory login session."""
 
-    def __init__(self, database=BASE / "green_path_v3.sqlite3",
+    def __init__(self, database=BASE / "green_path_v4.sqlite3",
                  seed_file=BASE / "starter_locations.json"):
         self.user_id = None
         self.db = sqlite3.connect(database)
@@ -90,6 +91,11 @@ class Game:
                     outcome TEXT NOT NULL CHECK(outcome IN
                         ('completed','visited','defeated','abandoned','interrupted')),
                     ended_at TEXT NOT NULL);
+                CREATE TABLE IF NOT EXISTS location_photos (
+                    location_id INTEGER PRIMARY KEY REFERENCES locations(id) ON DELETE CASCADE,
+                    before_photo TEXT NOT NULL DEFAULT '', after_photo TEXT NOT NULL DEFAULT '',
+                    before_credit TEXT NOT NULL DEFAULT '', after_credit TEXT NOT NULL DEFAULT '',
+                    photo_note TEXT NOT NULL DEFAULT '');
             """)
             if not self.db.execute("SELECT 1 FROM settings WHERE key='seeded'").fetchone():
                 data = json.loads(Path(seed_file).read_text(encoding="utf-8-sig"))
@@ -101,6 +107,17 @@ class Game:
                         (name,description,fact,enemy_name,enemy_type,enemy_hp)
                         VALUES (?,?,?,?,?,?)""", records)
                     self.db.execute("INSERT INTO settings VALUES ('seeded','yes')")
+            photo_file = BASE / "starter_photos.json"
+            if photo_file.exists() and not self.db.execute(
+                    "SELECT 1 FROM settings WHERE key='photos_seeded'").fetchone():
+                defaults = json.loads(photo_file.read_text(encoding="utf-8"))
+                with self.db:
+                    for item in defaults:
+                        location = self.db.execute("SELECT id FROM locations WHERE name=?", (item["name"],)).fetchone()
+                        if location:
+                            self.db.execute("INSERT OR IGNORE INTO location_photos VALUES (?,?,?,?,?,?)",
+                                            (location["id"],) + validate_photos(item))
+                    self.db.execute("INSERT INTO settings VALUES ('photos_seeded','yes')")
         except BaseException:
             self.db.close()
             raise
@@ -166,21 +183,32 @@ class Game:
         return True
 
     def locations(self):
-        return self.db.execute("SELECT * FROM locations ORDER BY id").fetchall()
+        return self.db.execute("""SELECT l.*, p.before_photo, p.after_photo,
+            p.before_credit, p.after_credit, p.photo_note FROM locations l
+            LEFT JOIN location_photos p ON l.id=p.location_id ORDER BY l.id""").fetchall()
 
-    def save_location(self, item, location_id=None):
+    def save_location(self, item, location_id=None, photos=None):
         self.current_user(admin=True)
         values = validate_location(item)
+        photo_values = validate_photos(photos) if photos is not None else None
         with self.db:
             if location_id is None:
-                self.db.execute("""INSERT INTO locations
+                result = self.db.execute("""INSERT INTO locations
                     (name,description,fact,enemy_name,enemy_type,enemy_hp)
                     VALUES (?,?,?,?,?,?)""", values)
+                location_id = result.lastrowid
             else:
                 result = self.db.execute("""UPDATE locations SET name=?,description=?,fact=?,
                     enemy_name=?,enemy_type=?,enemy_hp=? WHERE id=?""", values + (location_id,))
                 if result.rowcount != 1:
                     raise ValueError("Location no longer exists.")
+            if photo_values is not None:
+                self.db.execute("""INSERT INTO location_photos VALUES (?,?,?,?,?,?)
+                    ON CONFLICT(location_id) DO UPDATE SET
+                    before_photo=excluded.before_photo, after_photo=excluded.after_photo,
+                    before_credit=excluded.before_credit, after_credit=excluded.after_credit,
+                    photo_note=excluded.photo_note""", (location_id,) + photo_values)
+        return location_id
 
     def delete_location(self, location_id):
         self.current_user(admin=True)

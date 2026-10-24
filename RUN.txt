@@ -1,0 +1,16 @@
+Python 3.10 or newer with Tkinter is required.
+
+In this folder, run:
+python -m pip install -r requirements.txt
+python green_path_v4.py
+
+Keep the photos folder and both starter JSON files with the Python files.
+The game works offline after installing Pillow.
+
+To keep existing accounts and scores, close the old game, back up its
+green_path_v3.sqlite3 file, and copy it here as green_path_v4.sqlite3 before starting.
+The photo table is added automatically; accounts and scores are kept.
+
+Admin photos: Manage locations > Edit selected (or Add location).
+Choose the before/after photos, enter credits, and save the location.
+Use the scroll bar or mouse wheel if the form is taller than the window.
