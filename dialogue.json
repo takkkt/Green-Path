@@ -1,0 +1,91 @@
+{
+  "login_flavour": [
+    "Try breathing here for a change.",
+    "\"Oxygen is for noobs.\" — the smog. A terrible role model.",
+    "The air has texture. That feels like a design flaw.",
+    "Your lungs would like to speak to the manager.",
+    "Today's forecast: smog, with a chance of questionable decisions.",
+    "Welcome back. The pollution has been practising.",
+    "Please bin your litter. Keep the dramatic entrance.",
+    "Saving the planet. Occasionally remembering to dodge.",
+    "Fresh air is still a better flex than a high score.",
+    "If you can read this, the smog hasn't won yet.",
+    "You've got this. The exhaust pipe disagrees.",
+    "The planet called. Apparently 'my bad' isn't a cleanup plan."
+  ],
+  "facts": [
+    {
+      "topic": "air",
+      "text": "PM2.5 particles are generally 2.5 micrometres across or smaller. Tiny particles. Enormous confidence.",
+      "source": "https://www.epa.gov/pm-pollution/particulate-matter-pm-basics"
+    },
+    {
+      "topic": "air",
+      "text": "Particle pollution is a mix of solid particles and liquid droplets in the air. The world's least refreshing smoothie.",
+      "source": "https://www.epa.gov/pm-pollution/particulate-matter-pm-basics"
+    },
+    {
+      "topic": "air",
+      "text": "Fires, roads and construction can release particles directly into the air. 'Just a little dust' has entered the chat.",
+      "source": "https://www.epa.gov/pm-pollution/particulate-matter-pm-basics"
+    },
+    {
+      "topic": "air",
+      "text": "Sunlight helps nitrogen oxides and VOCs react to form ground-level ozone. Lovely teamwork. Completely wrong team.",
+      "source": "https://www.epa.gov/ground-level-ozone-pollution/ground-level-ozone-basics"
+    },
+    {
+      "topic": "air",
+      "text": "Ozone protects us high in the atmosphere, but is a pollutant at ground level. Even molecules need to learn their place.",
+      "source": "https://www.epa.gov/ground-level-ozone-pollution/ground-level-ozone-basics"
+    },
+    {
+      "topic": "air",
+      "text": "Wind can carry ozone far from where it forms. Pollution: sharing its bad decisions with the neighbours.",
+      "source": "https://www.epa.gov/ground-level-ozone-pollution/ground-level-ozone-basics"
+    },
+    {
+      "topic": "water",
+      "text": "Too much nitrogen and phosphorus can trigger algal blooms in water. The river did not order the extra-green upgrade.",
+      "source": "https://www.epa.gov/nutrientpollution/basic-information-nutrient-pollution"
+    },
+    {
+      "topic": "water",
+      "text": "Algal blooms can reduce the oxygen that fish need in the water. The fish would like a word with the management.",
+      "source": "https://www.epa.gov/nutrientpollution/basic-information-nutrient-pollution"
+    },
+    {
+      "topic": "plastic",
+      "text": "Discarded plastic can break into microplastics over time. Smaller rubbish is still rubbish. Nice try, litterbug.",
+      "source": "https://www.unep.org/en/news-and-stories/story/everything-you-should-know-about-microplastics"
+    },
+    {
+      "topic": "plastic",
+      "text": "Synthetic clothes can shed microplastic fibres when washed. Even the laundry has a side quest.",
+      "source": "https://www.unep.org/en/news-and-stories/story/everything-you-should-know-about-microplastics"
+    },
+    {
+      "topic": "plastic",
+      "text": "Microplastics have been found in water, soil and air. An impressive travel record. A dreadful houseguest.",
+      "source": "https://www.unep.org/en/news-and-stories/story/everything-you-should-know-about-microplastics"
+    }
+  ],
+  "scenes": {
+    "Taj Mahal, Agra": {
+      "arrival": "Morning light catches the dome, but a dusty haze hangs over the gardens. Beyond the gates, MarbleCorp's smoke drifts towards the stone. Time to clear a little space for this place to breathe.",
+      "victory": "The haze lifts from your path. For a moment, the marble catches the light again. That's a view worth fighting for."
+    },
+    "River Ganga": {
+      "arrival": "At the river steps, the current tugs at a knot of discarded plastic. Further upstream, the Water Syndicate is adding to the mess. Start at the bank; every piece kept out of the water matters.",
+      "victory": "The last tangle comes free and the current carries on. You've given this stretch of river a little breathing room. Nicely done."
+    },
+    "Delhi, India": {
+      "arrival": "Traffic hums behind a curtain of smog. Across the city square, even the trees look faded. The air-quality fallout is closing in, but you can still make a way through.",
+      "victory": "A break opens in the smog. The trees at the edge of the square come back into view. Take a breath; you earned this one."
+    },
+    "Gangotri Glacier, Himalayas": {
+      "arrival": "Up here, every sound travels. Meltwater threads through the ice beneath your boots, and the glacier's edge feels more fragile than it looks. Your next steps are for everything downstream.",
+      "victory": "The ridge falls quiet. You've met this chapter's challenge and carried the glacier's story a little further. Keep that promise with you."
+    }
+  }
+}

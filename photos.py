@@ -1,58 +1,42 @@
-"""Local photo loading and importing."""
-import hashlib
-import io
-from pathlib import Path
-from PIL import Image, ImageOps, UnidentifiedImageError
+"""Fixed-size photo previews loaded off the Tk thread; no resize work during play."""
+from functools import lru_cache
+import time
+import tkinter as tk
+from PIL import Image, ImageOps, ImageTk
+from resources import BASE
+from theme import BG, EDGE, MUTED
 
-BASE = Path(__file__).resolve().parent
-PHOTO_DIR = BASE / "photos"
-PHOTO_KEYS = ("before_photo", "after_photo", "before_credit", "after_credit", "photo_note")
-
-
-def photo_path(name):
+@lru_cache(maxsize=8)
+def load_photo(name):
     path = (BASE / name).resolve()
-    if not path.is_relative_to(PHOTO_DIR.resolve()):
-        raise ValueError("Photos must be stored in the project's photos folder.")
-    return path
+    if not path.is_relative_to((BASE / "photos").resolve()):
+        raise ValueError("Photo must be inside the photos folder.")
+    if path.stat().st_size > 12 * 1024 * 1024:
+        raise ValueError("Photo is too large.")
+    with Image.open(path) as image:
+        if image.width * image.height > 20_000_000:
+            raise ValueError("Photo is too large.")
+        image = ImageOps.exif_transpose(image)
+        image.thumbnail((380, 190), Image.Resampling.LANCZOS)
+        return image.convert("RGB")
 
+class PhotoView(tk.Label):
+    def __init__(self, parent, executor, name):
+        super().__init__(parent, text="Opening the view...", bg=BG, fg=MUTED,
+                         highlightthickness=1, highlightbackground=EDGE)
+        self.future = executor.submit(load_photo, name) if name else None
+        self.timer = self.after(25, self.poll)
+        self.bind("<Destroy>", lambda event: self.after_cancel(self.timer))
 
-def read_photo(filename, size=(800, 450)):
-    try:
-        if Path(filename).stat().st_size > 12 * 1024 * 1024:
-            raise ValueError("Choose a photo smaller than 12 MB.")
-        with Image.open(filename) as image:
-            if image.width * image.height > 20_000_000:
-                raise ValueError("Choose a photo smaller than 20 megapixels.")
-            image = ImageOps.exif_transpose(image).convert("RGB")
-            image.thumbnail(size, Image.Resampling.LANCZOS)
-            return image.copy()
-    except (UnidentifiedImageError, Image.DecompressionBombError) as error:
-        raise ValueError("This file could not be read as a photo.") from error
-
-
-def import_photo(filename):
-    image = read_photo(filename)
-    data = io.BytesIO()
-    image.save(data, format="PNG")
-    content = data.getvalue()
-    name = "uploads/" + hashlib.sha256(content).hexdigest()[:24] + ".png"
-    path = PHOTO_DIR / name
-    path.parent.mkdir(parents=True, exist_ok=True)
-    if not path.exists():
-        path.write_bytes(content)
-    return "photos/" + name
-
-
-def validate_photos(values):
-    result = []
-    for key in PHOTO_KEYS:
-        value = values.get(key, "")
-        if not isinstance(value, str) or len(value) > 2000:
-            raise ValueError("Photo paths and credits must be text under 2000 characters.")
-        value = value.strip()
-        if key.endswith("_photo") and value:
-            path = photo_path(value)
-            if path.suffix.lower() != ".png" or not path.is_file():
-                raise ValueError("Choose the photo again; its stored PNG file is missing.")
-        result.append(value)
-    return tuple(result)
+    def poll(self):
+        if not self.future:
+            self.configure(text="Photo unavailable")
+        elif not self.future.done():
+            self.configure(text="Opening the view" + "." * (int(time.monotonic() * 4) % 3 + 1))
+            self.timer = self.after(25, self.poll)
+        else:
+            try:
+                self.image = ImageTk.PhotoImage(self.future.result(), master=self)
+                self.configure(image=self.image, text="")
+            except (ValueError, OSError):
+                self.configure(text="Photo unavailable")
