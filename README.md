@@ -1,24 +1,27 @@
 # Green Path
 
-A Python/Tkinter game about fighting pollution at the Taj Mahal, the Ganga, Delhi and Gangotri. Dodge the pollutants, time your attacks and try to finish the route with your health intact.
+Green Path is a Python game about environmental challenges at the Taj Mahal, the Ganga, Delhi and Gangotri. Players move around an arena, avoid incoming pollutants, and use timed attacks, parries and dodges to clear each location. Health carries across the route, and finished results can be recorded on a local leaderboard.
 
-Project by **Akshith Kesari**.
+The interface uses Tkinter, with line drawings, location photos and short environmental facts. Accounts, map settings and scores are stored locally. The game works offline after setup.
 
-## Run the game
+## Requirements
 
-Use Python 3.10 or newer with Tkinter. Pillow is the only extra package.
+- Python 3.10 or newer with Tkinter.
+- Pillow, installed from `requirements.txt`.
+- Git if cloning the repository; otherwise download and extract the repository ZIP.
 
-Clone this repository, or download and extract its ZIP. Open a terminal in the project folder.
+Keep the Python files, `dialogue.json`, `schema.sql`, `PHOTO_CREDITS.md` and `green_path_assets.zip` in the project folder. Leave `green_path_assets.zip` zipped; the game prepares its resources automatically.
 
-**macOS / Linux**
+## Run on Windows
 
-```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python green_path_v4.py
+Open PowerShell in the project folder. If cloning the repository, run these first:
+
+```powershell
+git clone https://github.com/takkkt/Green-Path.git
+cd Green-Path
 ```
 
-**Windows**
+Create a virtual environment, install the requirement and start the game:
 
 ```powershell
 py -m venv .venv
@@ -26,17 +29,36 @@ py -m venv .venv
 .\.venv\Scripts\python.exe green_path_v4.py
 ```
 
-After the first setup, just run the last command. Keep all the Python files, `dialogue.json`, `schema.sql` and `green_path_assets.zip` together. Leave the asset ZIP zipped. If you update the files, close the old game window and launch it again.
+For later launches, run only the last command.
 
-The Python.org installers for Windows and macOS include Tkinter. On Linux, install your distribution's Python Tk package if Tkinter is missing.
+If using Git Bash instead of PowerShell:
 
-## Play
+```bash
+py -m venv .venv
+source .venv/Scripts/activate
+python -m pip install -r requirements.txt
+python green_path_v4.py
+```
 
-Create a player with a username and a passphrase of 12-128 characters, then sign in.
+## Run on macOS or Linux
+
+Open a terminal in the project folder:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python green_path_v4.py
+```
+
+On Linux, install your distribution's Python Tk package if Tkinter is missing. You can check Tkinter with `python3 -m tkinter`.
+
+## First start and controls
+
+Create a player account with a username and a passphrase of 12-128 characters, then sign in. Start the route from the home screen.
 
 | Key | Action |
 | --- | --- |
-| WASD / arrows | Move |
+| WASD / arrow keys | Move |
 | J / 1 | Attack |
 | K / 2 | Parry |
 | Space / 3 | Dodge |
@@ -44,37 +66,12 @@ Create a player with a username and a passphrase of 12-128 characters, then sign
 | Enter | Confirm a timing event |
 | P / Esc | Pause or resume |
 
-Attack and heavy need two presses: open the timing bar, then press again in the cyan zone. Heavy does more damage and takes 5.5 seconds to recharge.
+Attack and heavy attack use a timing bar: press once to begin, then press again in the highlighted zone. To parry, catch an incoming shot when its cyan ring appears, then press again to time the counter. Switching away from the game pauses combat.
 
-For a parry, look for the cyan ring around an incoming shot. Press K to catch it and K again to time the counter. A perfect parry blocks the hit and damages the enemy. A partial parry costs five HP and deals less damage. A failed parry takes the caught shot's damage. Holding the key does not count as a second press.
+If this installation has no administrator, sign in and choose **Set up admin**. An administrator can use **Edit maps** to add, edit or remove locations. Map changes apply to the next route; the current editor preserves existing photo pairs and does not import new photos.
 
-You start with 300 HP for the whole route. Clearing a stop earns ten points; skipping earns none. Later stops bring more pressure. Switching away from the game pauses the fight.
+## Saved data
 
-## Edit maps
+New installations create a `green_path_data` folder for accounts, resources and scores. Keep that folder when updating. If `green_path_v4.sqlite3` already exists beside the launcher, the game uses that location instead. Finished results are saved locally; an unfinished battle cannot be resumed after restarting.
 
-An admin account gets **Edit maps** on the home screen. If this copy has no admin yet, sign in, choose **Set up admin** and confirm. That gives your current account the admin role.
-
-Choose a map to edit or remove, or use **Add a map**. You can change its name, arrival story, fact, line drawing and base strength. New maps use one of five drawing templates; existing maps keep their photos. The editor does not upload new photos.
-
-Changes apply to your next route. Removing a map asks for confirmation and keeps saved scores and photo files.
-
-## Files and presentation
-
-The game is split into twelve Python modules:
-
-| Area | Files |
-| --- | --- |
-| Startup and interface | `green_path_v4.py`, `app.py`, `theme.py` |
-| SQL, admin and files | `database.py`, `admin.py`, `resources.py` |
-| Rules, route and dialogue | `combat.py`, `mission.py`, `dialogue.py` |
-| Animation, drawings and photos | `arena.py`, `art.py`, `photos.py` |
-
-The [four-person presentation guide](docs/Green_Path_Four_Speaker_Guide.pdf) explains the connections, movement calculations, Taj Mahal drawing and the functions behind each visible feature.
-
-`schema.sql` defines the SQLite tables. `dialogue.json` holds the story text and fact sources. The asset ZIP contains starter data and photos.
-
-## Saves and photo credits
-
-New installs create `green_path_data` for accounts, photos and scores. Keep it when updating. An older database beside the launcher is used automatically. Finished results are saved; an unfinished battle does not resume after restarting.
-
-The game works offline after setup. Photo pairs are illustrative contrasts, not proof of a real cleanup. Sources and reuse licences are in [PHOTO_CREDITS.md](PHOTO_CREDITS.md); pollution fact sources are also listed in the game's Credits window.
+Photo pairs are illustrative contrasts from different dates and viewpoints. Photo sources and reuse licences are listed in [PHOTO_CREDITS.md](PHOTO_CREDITS.md), and fact sources are available in the game's Credits window.
