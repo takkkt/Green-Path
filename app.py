@@ -65,7 +65,7 @@ class App:
         return action_button(parent or self.page, text, run, "Primary.TButton" if primary else "TButton", anchor="w", pady=(9, 4))
     def login_screen(self):
         self.clear("")
-        self.say("A GAME BY AKSHITH KESARI", 9, MUTED)
+        self.say("A GAME BY TEAM ECO", 9, MUTED)
         spread = tk.Frame(self.page, bg=BG)
         spread.pack(fill="x", pady=(37, 19))
         story, divider = tk.Frame(spread, bg=BG), tk.Frame(spread, bg=EDGE)
